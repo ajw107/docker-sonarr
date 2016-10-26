@@ -16,7 +16,13 @@ ENV REPOBRANCH="develop"
 
 #make life easy for yourself
 ENV TERM=xterm-color
-RUN 'echo '\''#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M:%S %d/%m/%Y" --block-size="\'\''\'\'''\''1" $@'\' > /tmp/ll''
+# The horribly complex echo command is causing probelms, and docker
+# is not telling me what the problem is, it would appear it's to do
+# with having to start pairing up quotes once you run it through
+# sh -c which needs you include yet another level of quotes around
+# the whole command and rediversion.  This script helped immensly:
+# http://unix.stackexchange.com/a/187452/197090
+RUN echo '\''#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M:%S %d/%m/%Y" --block-size="\'\''\'\'''\''1" $@'\' > /tmp/ll'
 RUN mv /tmp/ll /usr/bin/ll
 RUN chmod +x /usr/bin/ll
 
