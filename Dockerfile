@@ -6,8 +6,8 @@ ARG DEBIAN_FRONTEND="noninteractive"
 
 #add extra environment settings
 ENV CONFIG="/config"
-ENV APPDIRNAME="sonarr"
-ENV APP_ROOT="/app"
+ENV APPDIRNAME="NzbDrone"
+ENV APP_ROOT="/opt"
 ENV APP_OPTS="-nobrowser -data=${CONFIG}"
 ENV APP_EXEC="NzbDrone.exe"
 ENV APP_COMP="mono"
