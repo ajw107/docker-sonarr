@@ -16,7 +16,8 @@ ENV REPOBRANCH="develop"
 
 #make life easy for yourself
 ENV TERM=xterm-color
-RUN echo $'#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M %d/%m/%Y" --block-size="\'1" $@' > /usr/bin/ll
+RUN 'echo '\''#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M:%S %d/%m/%Y" --block-size="\'\''\'\'''\''1" $@'\' > /tmp/ll''
+RUN mv /tmp/ll /usr/bin/ll
 RUN chmod +x /usr/bin/ll
 
 ENV XDG_CONFIG_HOME="${CONFIG}/xdg"
@@ -31,6 +32,7 @@ RUN \
  apt-get update && \
  apt-get install -y \
 	libcurl3 \
+	mono \
 	nzbdrone \
 	nano && \
 
