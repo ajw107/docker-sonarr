@@ -2,8 +2,10 @@
 
 umask 022
 
-cd /opt/NzbDrone
+#variables set in Dockerfile
+
+cd "${APP_ROOT}/${APPDIRNAME}"
 
 exec \
-	s6-setuidgid abc mono NzbDrone.exe \
-	-nobrowser -data=/config
+	s6-setuidgid abc "$APP_COMP" "${APP_EXEC}" \
+         "$APP_OPTS"
