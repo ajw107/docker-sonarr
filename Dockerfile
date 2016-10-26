@@ -22,8 +22,10 @@ ENV TERM=xterm-color
 # sh -c which needs you include yet another level of quotes around
 # the whole command and rediversion.  This script helped immensly:
 # http://unix.stackexchange.com/a/187452/197090
-RUN ["/bin/echo", '#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M:%S %d/%m/%Y" --block-size="\'\''1" $@ > /tmp/ll']
-RUN mv /tmp/ll /usr/bin/ll
+#still nit working, so just copying the file
+#RUN ["/bin/echo", '#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M:%S %d/%m/%Y" --block-size="\'\''1" $@ > /tmp/ll']
+#RUN mv /tmp/ll /usr/bin/ll
+COPY ll /usr/bin
 RUN chmod +x /usr/bin/ll
 
 ENV XDG_CONFIG_HOME="${CONFIG}/xdg"
