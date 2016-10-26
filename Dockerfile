@@ -22,7 +22,7 @@ ENV TERM=xterm-color
 # sh -c which needs you include yet another level of quotes around
 # the whole command and rediversion.  This script helped immensly:
 # http://unix.stackexchange.com/a/187452/197090
-RUN 'echo '\''#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M:%S %d/%m/%Y" --block-size="\'\''\'\'''\''1" $@'\' > /tmp/ll''
+RUN '\''echo '\''\'\'''\''#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M:%S %d/%m/%Y" --block-size="\'\''\'\'''\''1" $@'\''\'\'''\'' > /tmp'\''
 RUN mv /tmp/ll /usr/bin/ll
 RUN chmod +x /usr/bin/ll
 
