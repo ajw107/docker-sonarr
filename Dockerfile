@@ -40,7 +40,7 @@ RUN \
  apt-get update && \
  apt-get install -y \
 	libcurl3 \
-	mono \
+	mono-runtime \
 	nzbdrone \
 	nano && \
 
