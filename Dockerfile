@@ -1,5 +1,5 @@
 FROM lsiobase/xenial
-MAINTAINER sparklyballs, Alex Wood (ajw107)
+MAINTAINER sparklyballs, ajw107 (Alex Wood)
 
 # environment settings
 ARG DEBIAN_FRONTEND="noninteractive"
