@@ -39,7 +39,7 @@ RUN \
 #	| tee /etc/apt/sources.list.d/mono-xamarin.list && \
  echo "**** add sonarr repository ****" && \
  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC && \
- echo "deb http://apt.sonarr.tv/ master main" > \
+ echo "deb http://apt.sonarr.tv/ develop main" > \
          /etc/apt/sources.list.d/sonarr.list
 
  apt-get update && \
