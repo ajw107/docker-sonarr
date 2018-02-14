@@ -1,16 +1,16 @@
 #!/usr/bin/with-contenv bash
 
 # install preview version of sonarr
-if [ ! -d "${APP_ROOT}/${APPDIRNAME}" ]; then
-  mkdir -p "${APP_ROOT}/${APPDIRNAME}" && \
-  curl -o \
-  /tmp/sonarr.tar.gz -L \
-         "https://download.sonarr.tv/v2/phantom/latest/NzbDrone.phantom.tar.gz" && \
-  tar xf \
-  /tmp/sonarr.tar.gz -C \
-         "${APP_ROOT}/${APPDIRNAME}" --strip-components=1 && \
-  rm /tmp/*.tar.gz
-fi
+#if [ ! -d "${APP_ROOT}/${APPDIRNAME}" ]; then
+#  mkdir -p "${APP_ROOT}/${APPDIRNAME}" && \
+#  curl -o \
+#  /tmp/sonarr.tar.gz -L \
+#         "https://download.sonarr.tv/v2/phantom/latest/NzbDrone.phantom.tar.gz" && \
+#  tar xf \
+#  /tmp/sonarr.tar.gz -C \
+#         "${APP_ROOT}/${APPDIRNAME}" --strip-components=1 && \
+#  rm /tmp/*.tar.gz
+#fi
 
 # cleanup pid if it exists
 [[ -e "${CONFIG}/nzbdrone.pid" ]] && \
