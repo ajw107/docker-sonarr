@@ -51,7 +51,7 @@ RUN \
 	nano \
         nzbdrone
 
-sonarrVer=`apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^\w*:\ *//'`
+RUN sonarrVer=`apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^\w*:\ *//'`
 LABEL build_version=${sonarrVer}
 
 RUN \
