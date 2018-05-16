@@ -16,6 +16,7 @@ ENV APP_COMP_OPTS="--debug"
 ENV REPOURL="http://apt.sonarr.tv/"
 ENV REPOBRANCH="develop"
 ENV XDG_CONFIG_HOME="${CONFIG}/xdg"
+ENV MONOREPOBRANCH="stable-xenial"
 
 #make life easy for yourself
 ENV TERM=xterm-color
@@ -33,23 +34,27 @@ RUN chmod +x /usr/bin/ll
 
 # install packages
 RUN \
-# apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
-#     --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
-#echo "deb http://download.mono-project.com/repo/debian wheezy main" \#
-#	| tee /etc/apt/sources.list.d/mono-xamarin.list && \
+ apt install -y apt-transport-https  && \
+ echo "**** add mono repository ****" && \
+ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
+ echo "deb https://download.mono-project.com/repo/ubuntu ${MONOREPOBRANCH} main" | tee /etc/apt/sources.list.d/mono-official-stable.list  && \
  echo "**** add sonarr repository ****" && \
  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC && \
- echo "deb http://apt.sonarr.tv/ develop main" > \
+ echo "deb ${REPOURL} ${REPOBRANCH} main" > \
          /etc/apt/sources.list.d/sonarr.list
 RUN \
  apt-get update && \
  apt-get install -y \
-#	libmono-cil-dev \
+	libmono-cil-dev \
 	mediainfo \
 	sqlite3 \
 	nano \
-        nzbdrone && \
+        nzbdrone
 
+sonarrVer=`apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^\w*:\ *//'`
+LABEL build_version=${sonarrVer}
+
+RUN \
 # cleanup
  apt-get clean && \
  rm -rf \
