@@ -1,5 +1,5 @@
 #FROM lsiobase/xenial
-FROM lsiobase/mono
+FROM lsiobase/ubuntu:bionic
 MAINTAINER sparklyballs, ajw107 (Alex Wood)
 
 # environment settings
@@ -13,10 +13,10 @@ ENV APP_OPTS="-nobrowser -data=${CONFIG}"
 ENV APP_EXEC="NzbDrone.exe"
 ENV APP_COMP="mono"
 ENV APP_COMP_OPTS="--debug"
-ENV REPOURL="http://apt.sonarr.tv/"
-ENV REPOBRANCH="develop"
+ENV SONARRREPOURL="http://apt.sonarr.tv/"
+ENV SONARRREPOBRANCH="develop"
 ENV XDG_CONFIG_HOME="${CONFIG}/xdg"
-ENV MONOREPOBRANCH="stable-xenial"
+ENV MONOREPOBRANCH="stable-bionic"
 
 #make life easy for yourself
 ENV TERM=xterm-color
@@ -34,17 +34,18 @@ RUN chmod +x /usr/bin/ll
 
 # install packages
 RUN \
- apt install -y apt-transport-https  && \
+ apt update && \
+ apt install -y apt-transport-https  gnupg && \
  echo "**** add mono repository ****" && \
  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
  echo "deb https://download.mono-project.com/repo/ubuntu ${MONOREPOBRANCH} main" | tee /etc/apt/sources.list.d/mono-official-stable.list  && \
  echo "**** add sonarr repository ****" && \
  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC && \
- echo "deb ${REPOURL} ${REPOBRANCH} main" > \
+ echo "deb ${SONARRREPOURL} ${SONARRREPOBRANCH} main" > \
          /etc/apt/sources.list.d/sonarr.list
 RUN \
- apt-get update && \
- apt-get install -y \
+ apt update && \
+ apt install -y \
 	libmono-cil-dev \
 	mediainfo \
 	sqlite3 \
@@ -56,7 +57,7 @@ LABEL build_version=${sonarrVer}
 
 RUN \
 # cleanup
- apt-get clean && \
+ apt clean && \
  rm -rf \
 	/tmp/* \
 	/var/lib/apt/lists/* \
