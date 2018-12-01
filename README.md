@@ -67,7 +67,13 @@ Access the webui at `<your-ip>:8989`, for more information check out [Sonarr](ht
 
 ## Info
 
-* Monitor the logs of the container in realtime `docker logs -f sonarr`.
+Monitor the logs of the container in realtime `docker logs -f sonarr`.
+
+* container version number 
+`docker inspect -f '{{ index .Config.Labels "build_version" }}' sonarr`
+
+* image version number
+`docker inspect -f '{{ index .Config.Labels "build_version" }}' linuxserver/sonarr`
 
 ## Changelog
 
