@@ -1,0 +1,4 @@
+sonarrVer=`apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^\w*:\ *//'`
+echo "VERSION: [${sonarrVer}]"
+chmod 777 /VERSION
+echo "${sonarrVer}">/VERSION/SONARR_VER

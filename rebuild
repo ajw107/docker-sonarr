@@ -1,0 +1,34 @@
+USERNAME=ajw107
+IMAGE_NAME=docker-sonarr
+APP_NAME=Sonarr
+VERSION_FILE=SONARR_VER
+SOURCE_BIND="$(pwd)/VERSION"
+TARGET_BIND=/VERSION
+
+#Remove old stuff
+if [ -z "${SOURCE_BIND}" ]
+then
+    rm -rf "${SOURCE_BIND}"
+fi
+mkdir "${SOURCE_BIND}"
+
+docker rmi ${USERNAME}/${IMAGE_NAME} 
+
+#build new image
+docker build --tag ${USERNAME}/${IMAGE_NAME} .
+
+#grab version from it using get_version script file added to it
+docker run --rm --mount type=bind,source="${SOURCE_BIND}",target="${TARGET_BIND}" ${USERNAME}/${IMAGE_NAME} sh /get_version
+version=`cat "${SOURCE_BIND}/${VERSION_FILE}"`
+
+#clean up
+rm -rf "${SOURCE_BIND}"
+
+#tag everything
+echo "TAGGING WITH: [${version}]"
+docker tag ${USERNAME}/${IMAGE_NAME}:latest ${USERNAME}/${IMAGE_NAME}:${version}
+git tag -a "${version}" -m "${APP_NAME}-${version}"
+#push it up to the docker hub NOTE git is not pushed as you may want to add/remove new/old files
+#also note if you have a webhook set up between github and dockerhub the dockerhub will rebuild and create an image tagged using the -m parameter of the git tag command above, you may not want this
+docker push ${USERNAME}/${IMAGE_NAME}:latest
+docker push ${USERNAME}/${IMAGE_NAME}:$version

@@ -29,6 +29,7 @@ ENV TERM=xterm-color
 #still nit working, so just copying the file
 #RUN ["/bin/echo", '#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M:%S %d/%m/%Y" --block-size="\'\''1" $@ > /tmp/ll']
 #RUN mv /tmp/ll /usr/bin/ll
+COPY get_version /get_version
 COPY root/ /
 RUN chmod +x /usr/bin/ll
 
@@ -52,8 +53,10 @@ RUN \
 	nano \
         nzbdrone
 
-RUN sonarrVer=`apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^\w*:\ *//'`
-LABEL build_version=${sonarrVer}
+#RUN sonarrVer=`apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^\w*:\ *//'`
+#RUN apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^\w*:\ *//'>/VERSIONS/SONARR_VER
+#LABEL build_version=${sonarrVer}
+#RUN sh /get_version
 
 RUN \
 # cleanup
@@ -65,4 +68,4 @@ RUN \
 
 # ports and volumes
 EXPOSE 8989
-VOLUME "${CONFIG}" /mnt
+VOLUME /VERSION "${CONFIG}" /mnt
