@@ -13,9 +13,10 @@ fi
 mkdir "${SOURCE_BIND}"
 
 docker rmi ${USERNAME}/${IMAGE_NAME} 
+docker system prune -af
 
 #build new image
-docker build --tag ${USERNAME}/${IMAGE_NAME} .
+docker build --no-cache --force-rm --tag ${USERNAME}/${IMAGE_NAME} .
 
 #grab version from it using get_version script file added to it
 docker run --rm --mount type=bind,source="${SOURCE_BIND}",target="${TARGET_BIND}" ${USERNAME}/${IMAGE_NAME} sh /get_version
