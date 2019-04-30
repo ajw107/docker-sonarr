@@ -1,7 +1,8 @@
 USERNAME=ajw107
 IMAGE_NAME=docker-sonarr
 APP_NAME=Sonarr
-VERSION_FILE=SONARR_VER
+PROG_NAME=SONARR
+VERSION_FILE=${PROG_NAME}_VER
 SOURCE_BIND="$(pwd)/VERSION"
 TARGET_BIND=/VERSION
 
@@ -11,15 +12,14 @@ then
     rm -rf "${SOURCE_BIND}"
 fi
 mkdir "${SOURCE_BIND}"
-
 docker rmi ${USERNAME}/${IMAGE_NAME} 
 docker system prune -af
 
 #build new image
-docker build --no-cache --force-rm --tag ${USERNAME}/${IMAGE_NAME} .
+docker build --no-cache --build-arg PROG_NAME=${PROG_NAME} --build-arg VERSION_FILE=${TARGET_BIND}/${PROG_NAME}_VER --tag ${USERNAME}/${IMAGE_NAME} .
 
 #grab version from it using get_version script file added to it
-docker run --rm --mount type=bind,source="${SOURCE_BIND}",target="${TARGET_BIND}" ${USERNAME}/${IMAGE_NAME} sh /get_version
+docker run --rm --mount type=bind,source="${SOURCE_BIND}",target="${TARGET_BIND}" ${USERNAME}/${IMAGE_NAME} bash /get_version
 version=`cat "${SOURCE_BIND}/${VERSION_FILE}"`
 
 #clean up

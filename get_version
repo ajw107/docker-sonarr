@@ -1,4 +1,4 @@
-sonarrVer=`apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^\w*:\ *//'`
-echo "VERSION: [${sonarrVer}]"
-chmod 777 /VERSION
-echo "${sonarrVer}">/VERSION/SONARR_VER
+#grab line which includes installed version number, trim all spaces and then remove all the letters upto and including the :
+PROG_VER=$(apt-cache policy nzbdrone | grep Installed: | tr -d '[:space:]' | sed -e 's/^[[:alpha:]]*:*//')
+chmod -R 777 $(dirname ${VERSION_FILE})
+echo "${PROG_VER}">${VERSION_FILE}
