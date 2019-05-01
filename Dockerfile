@@ -84,7 +84,7 @@ RUN \
   fi && \
   echo "${PROG_NAME} Ver: [${PROG_VER}]"
 
-#LABEL build_version=${SONARR_VER}
+#LABEL build_version=${PROG_VER}
 
 RUN \
 # cleanup
