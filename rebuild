@@ -12,8 +12,8 @@ then
     rm -rf "${SOURCE_BIND}"
 fi
 mkdir "${SOURCE_BIND}"
-docker rmi ${USERNAME}/${IMAGE_NAME} 
-docker system prune -af
+#docker rmi ${USERNAME}/${IMAGE_NAME} 
+#docker system prune -af
 
 #build new image
 docker build --no-cache --build-arg PROG_NAME=${PROG_NAME} --build-arg VERSION_FILE=${TARGET_BIND}/${PROG_NAME}_VER --tag ${USERNAME}/${IMAGE_NAME} .
