@@ -52,8 +52,8 @@ RUN \
   #echo "deb https://download.mono-project.com/repo/ubuntu ${MONOREPOBRANCH} main" | \
   #     tee /etc/apt/sources.list.d/mono-official-stable.list  && \
   echo "**** add mediainfo repository ****" && \
-  wget https://mediaarea.net/repo/deb/repo-mediaarea_1.0-11_all.deb && \
-  dpkg -i repo-mediaarea_1.0-11_all.deb && \
+  wget https://mediaarea.net/repo/deb/repo-mediaarea_1.0-12_all.deb && \
+  dpkg -i repo-mediaarea_1.0-12_all.deb && \
   echo "**** add sonarr repository ****" && \
   #apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC && \
   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8 && \
