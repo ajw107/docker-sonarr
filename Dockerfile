@@ -44,21 +44,22 @@ VOLUME /VERSION
 # install packages
 #The apt-key code below needs changing as soon as apt-key has been fully depreciated and replaced by something else
 RUN \
-  #I'd rather use just apt as it won;t error out when organisations change their name (ie. google chrome), etc
-  apt-get update && \
-  apt-get install -y jq wget apt-transport-https  gnupg && \
-  #echo "**** add mono repository ****" && \
-  #apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
-  #echo "deb https://download.mono-project.com/repo/ubuntu ${MONOREPOBRANCH} main" | \
-  #     tee /etc/apt/sources.list.d/mono-official-stable.list  && \
   echo "**** add mediainfo repository ****" && \
-  wget https://mediaarea.net/repo/deb/repo-mediaarea_1.0-12_all.deb && \
+  curl --output repo-mediaarea_1.0-12_all.deb https://mediaarea.net/repo/deb/repo-mediaarea_1.0-12_all.deb && \
   dpkg -i repo-mediaarea_1.0-12_all.deb && \
   echo "**** add sonarr repository ****" && \
   #apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC && \
   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8 && \
   echo "deb ${SONARRREPOURL} ${SONARRREPOBRANCH} main" > \
          /etc/apt/sources.list.d/sonarr.list
+RUN \
+  #I'd rather use just apt as it won;t error out when organisations change their name (ie. google chrome), etc
+  apt-get update && \
+  apt-get install -y jq wget apt-transport-https  gnupg
+  #echo "**** add mono repository ****" && \
+  #apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
+  #echo "deb https://download.mono-project.com/repo/ubuntu ${MONOREPOBRANCH} main" | \
+  #     tee /etc/apt/sources.list.d/mono-official-stable.list  && \
 RUN \
   #I'd rather use just apt as it won;t error out when organisations change their name (ie. google chrome), etc
   apt-get update && \
