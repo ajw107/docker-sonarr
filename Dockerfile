@@ -44,9 +44,10 @@ VOLUME /VERSION
 # install packages
 #The apt-key code below needs changing as soon as apt-key has been fully depreciated and replaced by something else
 RUN \
-  echo "**** add mediainfo repository ****" && \
-  curl --output repo-mediaarea_1.0-13_all.deb https://mediaarea.net/repo/deb/repo-mediaarea_1.0-13_all.deb && \
-  dpkg -i repo-mediaarea_1.0-13_all.deb && \
+  #temporarily removed as mediainfo ubuntu repo is broken
+  #echo "**** add mediainfo repository ****" && \
+  #curl --output repo-mediaarea_1.0-13_all.deb https://mediaarea.net/repo/deb/repo-mediaarea_1.0-13_all.deb && \
+  #dpkg -i repo-mediaarea_1.0-13_all.deb && \
   echo "**** add sonarr repository ****" && \
   #apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC && \
   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8 && \
@@ -60,11 +61,26 @@ RUN \
   #apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
   #echo "deb https://download.mono-project.com/repo/ubuntu ${MONOREPOBRANCH} main" | \
   #     tee /etc/apt/sources.list.d/mono-official-stable.list  && \
+#temporary workaround to install mediainfo whilst ubuntu repo is down
+RUN \
+  curl --output libzen0v5_0.4.38-1_amd64.xUbuntu_18.04.deb \
+    https://mediaarea.net/download/binary/libzen0/0.4.38/libzen0v5_0.4.38-1_amd64.xUbuntu_18.04.deb && \
+  curl --output libmediainfo0v5_20.09-1_amd64.xUbuntu_18.04.deb \
+    https://mediaarea.net/download/binary/libmediainfo0/20.09/libmediainfo0v5_20.09-1_amd64.xUbuntu_18.04.deb && \
+  curl --output mediainfo_20.09-1_amd64.xUbuntu_18.04.deb \
+    https://mediaarea.net/download/binary/mediainfo/20.09/mediainfo_20.09-1_amd64.xUbuntu_18.04.deb && \
+  dpkg -i libzen0v5_0.4.38-1_amd64.xUbuntu_18.04.deb && \
+  dpkg -i libmediainfo0v5_20.09-1_amd64.xUbuntu_18.04.deb && \
+  dpkg -i mediainfo_20.09-1_amd64.xUbuntu_18.04.deb && \
+  rm libzen0v5_0.4.38-1_amd64.xUbuntu_18.04.deb && \
+  rm libmediainfo0v5_20.09-1_amd64.xUbuntu_18.04.deb && \
+  rm mediainfo_20.09-1_amd64.xUbuntu_18.04.deb
 RUN \
   #I'd rather use just apt as it won;t error out when organisations change their name (ie. google chrome), etc
   apt-get update && \
   apt-get install -y \
-    mediainfo \
+    #temporarily removed as mediainfo ubuntu repo is broken
+    #mediainfo \
     sqlite3 \
     nano \
     sonarr
