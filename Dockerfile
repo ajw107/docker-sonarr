@@ -45,8 +45,8 @@ VOLUME /VERSION
 #The apt-key code below needs changing as soon as apt-key has been fully depreciated and replaced by something else
 RUN \
   echo "**** add mediainfo repository ****" && \
-  curl --output repo-mediaarea_1.0-12_all.deb https://mediaarea.net/repo/deb/repo-mediaarea_1.0-12_all.deb && \
-  dpkg -i repo-mediaarea_1.0-12_all.deb && \
+  curl --output repo-mediaarea_1.0-13_all.deb https://mediaarea.net/repo/deb/repo-mediaarea_1.0-13_all.deb && \
+  dpkg -i repo-mediaarea_1.0-13_all.deb && \
   echo "**** add sonarr repository ****" && \
   #apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FDA5DFFC && \
   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8 && \
