@@ -1,5 +1,5 @@
 #FROM lsiobase/xenial
-FROM lsiobase/mono:bionic
+FROM lsiobase/mono:focal
 MAINTAINER sparklyballs, ajw107 (Alex Wood)
 
 # environment settings
