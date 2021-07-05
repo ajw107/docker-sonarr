@@ -8,6 +8,9 @@ ARG DEBIAN_FRONTEND="noninteractive"
 ARG PROG_NAME="SONARR"
 ARG PROG_VER
 ARG VERSION_FILE_LOCATION=/VERSION/${PROG_NAME}_VER
+ARG MEDIAINFO_VERSION="21.03"
+ARG LIBZEN_VERSION="0.4.39"
+ARG UBUNTU_NUMERIC_VERSION="20.04"
 
 #add extra environment settings
 ENV VERSION_FILE=${VERSION_FILE_LOCATION}
@@ -55,26 +58,27 @@ RUN \
          /etc/apt/sources.list.d/sonarr.list
 RUN \
   #I'd rather use just apt as it won;t error out when organisations change their name (ie. google chrome), etc
+  #libcurl3-gnutls libmms0 added as dependancied of mediainfo (stopped being automatically installed for some reason)
   apt-get update && \
-  apt-get install -y jq wget apt-transport-https  gnupg
+  apt-get install -y jq wget apt-transport-https gnupg libcurl3-gnutls libmms0
   #echo "**** add mono repository ****" && \
   #apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
   #echo "deb https://download.mono-project.com/repo/ubuntu ${MONOREPOBRANCH} main" | \
   #     tee /etc/apt/sources.list.d/mono-official-stable.list  && \
 #temporary workaround to install mediainfo whilst ubuntu repo is down
 RUN \
-  curl --output libzen0v5_0.4.38-1_amd64.xUbuntu_18.04.deb \
-    https://mediaarea.net/download/binary/libzen0/0.4.38/libzen0v5_0.4.38-1_amd64.xUbuntu_18.04.deb && \
-  curl --output libmediainfo0v5_20.09-1_amd64.xUbuntu_18.04.deb \
-    https://mediaarea.net/download/binary/libmediainfo0/20.09/libmediainfo0v5_20.09-1_amd64.xUbuntu_18.04.deb && \
-  curl --output mediainfo_20.09-1_amd64.xUbuntu_18.04.deb \
-    https://mediaarea.net/download/binary/mediainfo/20.09/mediainfo_20.09-1_amd64.xUbuntu_18.04.deb && \
-  dpkg -i libzen0v5_0.4.38-1_amd64.xUbuntu_18.04.deb && \
-  dpkg -i libmediainfo0v5_20.09-1_amd64.xUbuntu_18.04.deb && \
-  dpkg -i mediainfo_20.09-1_amd64.xUbuntu_18.04.deb && \
-  rm libzen0v5_0.4.38-1_amd64.xUbuntu_18.04.deb && \
-  rm libmediainfo0v5_20.09-1_amd64.xUbuntu_18.04.deb && \
-  rm mediainfo_20.09-1_amd64.xUbuntu_18.04.deb
+  curl --output libzen0v5_${LIBZEN_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb \
+    https://mediaarea.net/download/binary/libzen0/${LIBZEN_VERSION}/libzen0v5_${LIBZEN_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb && \
+  curl --output libmediainfo0v5_${MEDIAINFO_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb \
+    https://mediaarea.net/download/binary/libmediainfo0/${MEDIAINFO_VERSION}/libmediainfo0v5_${MEDIAINFO_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb && \
+  curl --output mediainfo_${MEDIAINFO_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb \
+    https://mediaarea.net/download/binary/mediainfo/${MEDIAINFO_VERSION}/mediainfo_${MEDIAINFO_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb && \
+  dpkg -i libzen0v5_${LIBZEN_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb && \
+  dpkg -i libmediainfo0v5_${MEDIAINFO_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb && \
+  dpkg -i mediainfo_${MEDIAINFO_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb && \
+  rm libzen0v5_${LIBZEN_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb && \
+  rm libmediainfo0v5_${MEDIAINFO_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb && \
+  rm mediainfo_${MEDIAINFO_VERSION}-1_amd64.xUbuntu_${UBUNTU_NUMERIC_VERSION}.deb
 RUN \
   #I'd rather use just apt as it won;t error out when organisations change their name (ie. google chrome), etc
   apt-get update && \
